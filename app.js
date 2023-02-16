@@ -1,8 +1,11 @@
 //Requiring the libraries
+require('dotenv').config()
+
 const express = require("express");
 const bodyParser = require("body-Parser");
 const ejs = require("ejs");
 const app = express();
+console.log(process.env.API_KEY);
 const mongoose = require("mongoose");
 const encrypt = require('mongoose-encryption');
 //connecting to MongoDB by mongoose
@@ -14,9 +17,11 @@ const userSchema = new mongoose.Schema({
     password: String,
 });
 
-const secret = "This is a secret message."
-userSchema.plugin(encrypt, { secret: secret , encryptedFields: ['password']});
+
+userSchema.plugin(encrypt, { secret: process.env.API_KEY , encryptedFields: ['password']});
 const User = new mongoose.model("User", userSchema);
+
+
 //app usage
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
