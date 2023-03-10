@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema({
 
 
 
+
+
 const User = new mongoose.model("User", userSchema);
 
 
@@ -42,7 +44,7 @@ app.route("/register")
 .post((req,res)=>{
     const newUser = new User({
         email: req.body.username,
-        password: md5(req.body.password)  
+        password: md5(req.body.password)
     });
     newUser.save((err)=>{
         if(err){
@@ -57,8 +59,8 @@ app.post("/login", (req,res)=>{
     const username = req.body.username;
     const password = md5(req.body.password);
     User.findOne({email:username},(err,foundUser)=>{
-        if(err){ 
-          console.log(err);          
+        if(err){
+          console.log(err);
         } else {
             if(foundUser){
                 if(foundUser.password === password){
@@ -73,6 +75,5 @@ app.post("/login", (req,res)=>{
 
 
 app.listen(3000, ()=>{
-  console.log("server is running on port 3000")  
+  console.log("server is running on port 3000")
 });
-
